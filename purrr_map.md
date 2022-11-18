@@ -1,16 +1,3 @@
----
-title: Lặp trong R
-author: Hoàng Bảo Long, MD MPH
-output:
-    pdf_document:
-        keep_md: true
-        keep_tex: false
-        latex_engine: xelatex
-        number_section: true
-geometry: margin=1in
----
-
-
 ```r
 library(knitr)
 opts_chunk$set(
