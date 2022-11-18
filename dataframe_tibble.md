@@ -82,6 +82,8 @@ d_tib
 ## 5 e         0     5
 ```
 
+### Slice hàng
+
 Cũng vì lí do này, data frame có thể slice theo tên hàng, còn tibble thì không.
 
 
@@ -109,6 +111,8 @@ d_tib %>% filter(id %in% c("a", "b"))
 ```
 
 ## Slice cột
+
+### Data frame
 
 Để truy cập vào dữ liệu của một cột trong data frame, chúng ta có những cách sau.
 
@@ -177,6 +181,8 @@ d[[col_name]]
 ```
 ## [1] 1 0 1 0 0
 ```
+
+### Tibble
 
 Đối với tibble, slicing luôn trả về subset.
 
