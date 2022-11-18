@@ -1,4 +1,4 @@
-# rtutor
+# R Tutorial
 
 Đây là tập hợp các tutorial cho ngôn ngữ R. Trong khi [pytutor](https://github.com/gothmania/pytutor) cung cấp tutorial để tiếp cận Python một cách hoàn chỉnh, rtutor tập trung vào đơn giản hóa các khái niệm phức tạp nhưng có tính ứng dụng cao trong R.
 
