@@ -1,5 +1,6 @@
 # So sánh data frame và tibble
 
+Khi thao tác với bảng số liệu trong R, bạn có thể lựa chọn sử dụng cấu trúc data frame có sẵn hoặc tibble, một kiểu dữ liệu mở rộng từ data frame được phát triển trong hệ sinh thái Tidyverse. Hai cấu trúc dữ liệu này có một số khác biệt mà bạn cần lưu ý khi thao tác.
 
 ```r
 library(dplyr)
