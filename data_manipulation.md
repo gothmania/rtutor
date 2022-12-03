@@ -73,7 +73,7 @@ Bằng những phép thao tác số liệu này, chúng ta có thể tạo ra m�
 
 Nhìn vào bộ số liệu gốc, mình nghĩ rằng sẽ cần tạo ra một (hoặc nhiều) bộ số liệu trung gian để phục vụ việc tính toán như trên. Bộ số liệu trung gian sẽ có cấu trúc như thế nào? Quan sát bảng phân tích kết quả, chúng ta thấy rằng:
 
-* Cột "Dặc điểm" là tên các biến mà chúng ta có trong bộ số liệu gốc.
+* Cột "Đặc điểm" là tên các biến mà chúng ta có trong bộ số liệu gốc.
 * Cột "Nhóm" là các giá trị của các biến "Đặc điểm" có trong bộ số liệu gốc.
 * Cột "Hài lòng" là kết quả tổng hợp của điểm hài lòng trong bộ số liệu gốc.
 
