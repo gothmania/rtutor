@@ -7,7 +7,7 @@ opts_chunk$set(
 )
 ```
 
-# Bài toán
+## Bài toán
 
 Hôm nay mình sẽ giới thiệu với các bạn một bài toán phân tích số liệu đơn giản trong R. Bài toán này nhằm giúp các bạn hiểu rõ hơn cách thức tư duy khi giải quyết một bài toán bằng lập trình.
 
@@ -57,7 +57,7 @@ Giới     | Nữ      | ...
 Có nhiều cách để làm việc này. Cách mà mình giới thiệu hôm nay khá trực tiếp, mặc dù có thể không phải là cách tối ưu.
 
 
-# Các phép thao tác với số liệu
+## Các phép thao tác với số liệu
 
 Có 4 phép thao tác (manipulate) số liệu chính:
 
@@ -69,7 +69,7 @@ Có 4 phép thao tác (manipulate) số liệu chính:
 Bằng những phép thao tác số liệu này, chúng ta có thể tạo ra mọi kết quả mong muốn từ một bộ số liệu gốc.
 
 
-# Tư duy thao tác số liệu
+## Tư duy thao tác số liệu
 
 Nhìn vào bộ số liệu gốc, mình nghĩ rằng sẽ cần tạo ra một (hoặc nhiều) bộ số liệu trung gian để phục vụ việc tính toán như trên. Bộ số liệu trung gian sẽ có cấu trúc như thế nào? Quan sát bảng phân tích kết quả, chúng ta thấy rằng:
 
@@ -88,7 +88,7 @@ stt | variable | value  | hailong
 
 Sau đó mình chỉ việc tạo ra các nhóm của Đặc điểm (`variable`) và Nhóm (`value`) để tổng hợp (aggregate) cột `hailong`. Hãy cùng xem chúng ta thực thi kế hoạch này.
 
-## Bước 1: Reshaping
+### Bước 1: Reshaping
 
 
 ```r
@@ -110,7 +110,7 @@ d_long %>% head() %>% kable()
 |    35.4|gioi     |Nu    |
 |    35.4|do_tuoi  |>45   |
 
-## Bước 2: Grouping và Aggregation
+### Bước 2: Grouping và Aggregation
 
 
 ```r
@@ -134,7 +134,7 @@ d_agg %>% kable()
 |gioi     |Nam   | 49.64345| 29.21245|
 |gioi     |Nu    | 50.84234| 28.77515|
 
-## Bước 3: Transformation
+### Bước 3: Transformation
 
 
 ```r
@@ -157,7 +157,7 @@ d_agg %>%
 |gioi     |Nu    |50.8 (28.8) |
 
 
-# Module hóa công việc
+## Module hóa công việc
 
 Như ở trên, bạn đã thấy chúng ta thống kê được mean (SD) của điểm hài lòng. Nhưng nếu chúng ta muốn làm tương tự như vậy với điểm chất lượng cuộc sống và gộp chung kết quả với điểm hài lòng thì bạn sẽ làm thế nào? Tất nhiên, bạn hoàn toàn có thể thêm tạo ra các biến `mean_qol` và `sd_qol` cho điểm chất lượng cuộc sống trong Bước 2, nhưng nếu không phải là 2 biến mà là 20 biến, thì việc đó sẽ rất phiền toái, hoặc nếu bạn phải thay đổi kế hoạch phân tích, loại bỏ biến `qol` và thêm biến khác vào. Đây là lúc bạn cần dùng đến **hàm**, và chúng ta gọi đây là module hóa công việc.
 
