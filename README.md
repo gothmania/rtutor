@@ -5,3 +5,4 @@
 1. [So sánh data frame và tibble](https://github.com/gothmania/rtutor/blob/main/dataframe_tibble.md)
 2. [Lặp trong R](https://github.com/gothmania/rtutor/blob/main/purrr_map.md)
 3. [Tạo nhóm từ biến liên tục](https://github.com/gothmania/rtutor/blob/main/categorization.md)
+4. [Tư duy thao tác dữ liệu trong R](https://github.com/gothmania/rtutor/blob/main/data_manipulation.md)
