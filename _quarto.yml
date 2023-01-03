@@ -5,7 +5,6 @@ project:
 book:
   title: "R Tutorial"
   author: "Hoang Bao Long, MD MPH"
-  downloads: pdf
   chapters:
     - index.qmd
     - 01_dataframe_tibble.qmd
@@ -20,5 +19,4 @@ format:
     code-copy: true
     mainfont: Arial
     fontsize: 11pt
-  pdf:
-    documentclass: scrreprt
+toc-title: "Mục lục"
