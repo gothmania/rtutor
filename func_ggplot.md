@@ -1,5 +1,3 @@
-::: {.cell}
-
 ```{.r .cell-code}
 library(knitr)
 opts_chunk$set(
@@ -7,7 +5,6 @@ opts_chunk$set(
     warning = FALSE
 )
 ```
-:::
 
 
 # Bài toán
@@ -16,8 +13,6 @@ Hôm nay chúng ta sẽ nói về việc sử dụng hàm trong R. Chúng ta s�
 
 Chúng ta sẽ có một cơ sở dữ liệu gồm các biến `gioi` (Nam/Nữ), `do_tuoi` (ba nhóm độ tuổi), `hb` (nồng độ hemoglobin), và `rbc` (số lượng hồng cầu).
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 library(dplyr)
@@ -41,7 +36,6 @@ d <- data.frame(
 d %>% head(10) %>% kable()
 ```
 
-::: {.cell-output-display}
 | stt|gioi |do_tuoi |    hb|  rbc|
 |---:|:----|:-------|-----:|----:|
 |   1|Nu   |>45     | 122.1| 3.93|
@@ -54,8 +48,6 @@ d %>% head(10) %>% kable()
 |   8|Nam  |<18     | 131.7| 3.76|
 |   9|Nam  |18-45   | 143.4| 4.85|
 |  10|Nu   |18-45   | 120.2| 4.22|
-:::
-:::
 
 
 Chúng ta sẽ vẽ biểu đồ histogram cho các biến `hb` và `rbc`.
@@ -66,8 +58,6 @@ Chúng ta sẽ vẽ biểu đồ histogram cho các biến `hb` và `rbc`.
 Thư viện `ggplot2` cung cấp cho chúng ta một engine đồ họa mạnh với khả năng tùy biến cao. Hãy cùng nhau vẽ một biểu đồ histogram cho biến `hb` và sau đó tùy biến nó. Đầu tiên, chúng ta sẽ dùng tối thiểu số lệnh cần để vẽ biểu đồ này. Lưu ý: trong bài này mình không giới thiệu tính năng các hàm trong `ggplot2`, bạn sẽ phải tự tìm hiểu ở những khóa học khác.
 
 
-::: {.cell}
-
 ```{.r .cell-code}
 library(ggplot2)
 
@@ -75,16 +65,12 @@ ggplot(d, aes(x = hb)) +
     geom_histogram()
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-3-1.png){width=576}
-:::
-:::
 
 
 Có một số tùy biến mà chúng ta thường sẽ muốn thiết lập để biểu đồ nhìn có thẩm mỹ hơn. Chẳng hạn, mình muốn chuyển sang theme đen-trắng, loại bỏ các đường dóng, đổi tên trục biểu đồ, và thêm ghi chú.
 
 
-::: {.cell}
 
 ```{.r .cell-code}
 ggplot(d, aes(x = hb)) +
@@ -98,16 +84,11 @@ ggplot(d, aes(x = hb)) +
     )
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-4-1.png){width=576}
-:::
-:::
 
 
 Mình chợt nhận ra là mình muốn thêm đường thẳng thể hiện trung bình của nồng độ hemoglobin vào biểu đồ này, và thay đổi màu sắc của histogram.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 ggplot(d, aes(x = hb)) +
@@ -136,16 +117,11 @@ ggplot(d, aes(x = hb)) +
     )
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-5-1.png){width=576}
-:::
-:::
 
 
 Bây giờ chúng ta sẽ vẽ tương tự cho biến `rbc`. Bạn nhận ra rằng mình sẽ sao chép lại một đoạn mã lệnh rất dài. Và giả sử mình muốn sử dụng những màu sắc khác cho histogram và đường trung bình, mình sẽ phải chỉnh sửa lại các dòng lệnh liên quan.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 ggplot(d, aes(x = rbc)) +
@@ -174,10 +150,7 @@ ggplot(d, aes(x = rbc)) +
     )
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-6-1.png){width=576}
-:::
-:::
 
 
 
@@ -201,8 +174,6 @@ Bạn có thể thấy rằng tất cả các dòng lệnh cho công việc này
 
 Hãy cùng nhau gói các công việc này vào trong hàm. Để thuận tiện, mình sẽ gói công việc khởi tạo biểu đồ và định dạng chung vào một hàm.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 library(rlang)
@@ -252,13 +223,9 @@ plot_mean <- function(g, data, var_name, line_color) {
         )
 }
 ```
-:::
-
 
 Sau khi đã xây dựng xong các hàm này, chúng ta có thể vẽ như ý muốn. Với biểu đồ cho hemoglobin, mình không muốn vẽ đường thẳng trung bình.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 var_name <- "hb"
@@ -269,16 +236,11 @@ plot_create(d) %>%
     plot_histogram(var_name, var_label, bar_fill)
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-8-1.png){width=576}
-:::
-:::
 
 
 Nhưng với biểu đồ cho hồng cầu, mình sẽ vẽ đường thẳng trung bình, và giữ nguyên thiết lập màu sắc của biểu đồ trước.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 var_name <- "rbc"
@@ -290,10 +252,7 @@ plot_create(d) %>%
     plot_mean(d, var_name, line_color)
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-9-1.png){width=576}
-:::
-:::
 
 
 
@@ -301,8 +260,6 @@ plot_create(d) %>%
 
 Giả sử bạn muốn vẽ hai biểu đồ histogram của `hb` cho hai nhóm giới tính. Chúng ta dễ dàng được điều này với hàm `facet_wrap()`.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 plot_subgroup <- function(g, var_subgroup, ncol = 2) {
@@ -322,18 +279,13 @@ plot_create(d) %>%
     plot_subgroup(var_subgroup)
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-10-1.png){width=960}
-:::
-:::
 
 
 ## Vẽ nhiều biểu đồ cho nhiều biến
 
 Bạn sẽ tự hỏi liệu có thể làm tương tự nhưng vẽ hai biểu đồ cho hai biến `hb` và `rbc` được không? Câu trả lời là chúng ta sẽ cần chuẩn bị dữ liệu cho việc này bằng `tidyr::pivot_longer()`.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 prepare_long_data <- function(data, vars_to_long, vars_labels,
@@ -352,7 +304,6 @@ prepare_long_data <- function(data, vars_to_long, vars_labels,
 prepare_long_data(d, c("hb", "rbc"), c("Hb", "RBC")) %>% head() %>% kable()
 ```
 
-::: {.cell-output-display}
 | stt|gioi |do_tuoi |variable |  value|
 |---:|:----|:-------|:--------|------:|
 |   1|Nu   |>45     |Hb       | 122.10|
@@ -361,14 +312,10 @@ prepare_long_data(d, c("hb", "rbc"), c("Hb", "RBC")) %>% head() %>% kable()
 |   2|Nam  |>45     |RBC      |   4.95|
 |   3|Nu   |>45     |Hb       | 121.50|
 |   3|Nu   |>45     |RBC      |   3.89|
-:::
-:::
 
 
 Với dữ liệu dạng dọc như thế này, chúng ta có thể sử dụng các hàm nêu trên, nhưng đổi tên các biến. Mình bỏ hàm vẽ đường thẳng trung bình vì trong trường hợp này bạn sẽ cần viết lại hàm (sử dụng hàm `ggplot2::stat_summary()`).
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 vars_to_long <- c("hb", "rbc")
@@ -387,18 +334,13 @@ prepare_long_data(d, vars_to_long, vars_labels) %>%
     plot_subgroup(var_subgroup)
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-12-1.png){width=960}
-:::
-:::
 
 
 ## Vẽ nhiều biểu đồ cho nhiều biến dưới nhóm
 
 Trong trường hợp muốn vẽ biểu đồ dưới nhóm cho cả giới và tuổi, chúng ta có thể làm như sau.
 
-
-::: {.cell}
 
 ```{.r .cell-code}
 library(purrr)
@@ -420,7 +362,6 @@ prepare_data_multisubgroups <- function(data, vars_subgroup, new_subgroup,
 prepare_data_multisubgroups(d, c("gioi", "do_tuoi"), "gioi_tuoi") %>% head() %>% kable()
 ```
 
-::: {.cell-output-display}
 | stt|gioi_tuoi |    hb|  rbc|
 |---:|:---------|-----:|----:|
 |   1|Nu, >45   | 122.1| 3.93|
@@ -429,10 +370,6 @@ prepare_data_multisubgroups(d, c("gioi", "do_tuoi"), "gioi_tuoi") %>% head() %>%
 |   4|Nam, <18  | 140.0| 3.98|
 |   5|Nam, >45  | 146.7| 5.14|
 |   6|Nu, <18   | 139.9| 3.32|
-:::
-:::
-
-::: {.cell}
 
 ```{.r .cell-code}
 vars_subgroup <- c("gioi", "do_tuoi")
@@ -447,10 +384,7 @@ prepare_data_multisubgroups(d, vars_subgroup, var_subgroup) %>%
     plot_subgroup(var_subgroup)
 ```
 
-::: {.cell-output-display}
 ![](func_ggplot_files/figure-html/unnamed-chunk-14-1.png){width=960}
-:::
-:::
 
 
 Hi vọng với những ví dụ trên đây, các bạn có thể mường tượng được vai trò của hàm trong việc chia một nhiệm vụ lớn thành nhiều công việc nhỏ. Hàm không chỉ giúp chúng ta viết các đoạn lệnh  gọn gàng hơn và tránh lặp lại các lệnh nhiều lần, nó còn giúp chúng ta tùy biến trong lập trình thông qua việc ghép các công việc khác nhau lại với nhau.
