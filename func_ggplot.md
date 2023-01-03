@@ -1,30 +1,3 @@
----
-title: "Sử dụng hàm trong R để tối ưu hóa công việc"
-author: "Hoàng Bảo Long, MD MPH"
-format:
-    html:
-        code-fold: true
-        code-overflow: wrap
-    pdf:
-        pdf-engine: xelatex
-        execute:
-            echo: false
-            warning: false
-    docx:
-        execute:
-            echo: false
-            warning: false
-number-sections: true
-toc: true
-toc-depth: 4
-toc-title: "Mục lục"
-mainfont: Arial
-sansfont: Arial
-fontsize: 10pt
-keep-md: true
----
-
-
 ::: {.cell}
 
 ```{.r .cell-code}
