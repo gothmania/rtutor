@@ -1,3 +1,5 @@
+# Sử dụng hàm trong R để tối ưu hóa công việc
+
 ```{.r .cell-code}
 library(knitr)
 opts_chunk$set(
@@ -7,7 +9,7 @@ opts_chunk$set(
 ```
 
 
-# Bài toán
+## Bài toán
 
 Hôm nay chúng ta sẽ nói về việc sử dụng hàm trong R. Chúng ta sẽ cùng tìm hiểu khi nào nên sử dụng hàm và vai trò của nó trong việc tối ưu hóa việc lập trình.
 
@@ -53,7 +55,7 @@ d %>% head(10) %>% kable()
 Chúng ta sẽ vẽ biểu đồ histogram cho các biến `hb` và `rbc`.
 
 
-# Vẽ biểu đồ bằng `ggplot2`
+## Vẽ biểu đồ bằng `ggplot2`
 
 Thư viện `ggplot2` cung cấp cho chúng ta một engine đồ họa mạnh với khả năng tùy biến cao. Hãy cùng nhau vẽ một biểu đồ histogram cho biến `hb` và sau đó tùy biến nó. Đầu tiên, chúng ta sẽ dùng tối thiểu số lệnh cần để vẽ biểu đồ này. Lưu ý: trong bài này mình không giới thiệu tính năng các hàm trong `ggplot2`, bạn sẽ phải tự tìm hiểu ở những khóa học khác.
 
@@ -154,7 +156,7 @@ ggplot(d, aes(x = rbc)) +
 
 
 
-# Đóng gói công việc bằng hàm
+## Đóng gói công việc bằng hàm
 
 Chúng ta đã thực hiện các công việc sau đây:
 
@@ -256,7 +258,7 @@ plot_create(d) %>%
 
 
 
-## Vẽ nhiều biểu đồ cho dưới nhóm
+### Vẽ nhiều biểu đồ cho dưới nhóm
 
 Giả sử bạn muốn vẽ hai biểu đồ histogram của `hb` cho hai nhóm giới tính. Chúng ta dễ dàng được điều này với hàm `facet_wrap()`.
 
@@ -282,7 +284,7 @@ plot_create(d) %>%
 ![](func_ggplot_files/figure-html/unnamed-chunk-10-1.png)
 
 
-## Vẽ nhiều biểu đồ cho nhiều biến
+### Vẽ nhiều biểu đồ cho nhiều biến
 
 Bạn sẽ tự hỏi liệu có thể làm tương tự nhưng vẽ hai biểu đồ cho hai biến `hb` và `rbc` được không? Câu trả lời là chúng ta sẽ cần chuẩn bị dữ liệu cho việc này bằng `tidyr::pivot_longer()`.
 
@@ -337,7 +339,7 @@ prepare_long_data(d, vars_to_long, vars_labels) %>%
 ![](func_ggplot_files/figure-html/unnamed-chunk-12-1.png)
 
 
-## Vẽ nhiều biểu đồ cho nhiều biến dưới nhóm
+### Vẽ nhiều biểu đồ cho nhiều biến dưới nhóm
 
 Trong trường hợp muốn vẽ biểu đồ dưới nhóm cho cả giới và tuổi, chúng ta có thể làm như sau.
 
