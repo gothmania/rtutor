@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Tutorial - 4&nbsp; Tư duy thao tác dữ liệu trong R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05_func_ggplot.html" rel="next">
+<link href="./03_categorization.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tư duy thao tác dữ liệu trong R</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R Tutorial</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Giới thiệu</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_dataframe_tibble.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">So sánh data frame và tibble</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_purrr_map.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lặp trong R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_categorization.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tạo nhóm từ biến liên tục</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data_manipulation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tư duy thao tác dữ liệu trong R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_func_ggplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sử dụng hàm trong R để tối ưu hóa công việc</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bài-toán" id="toc-bài-toán" class="nav-link active" data-scroll-target="#bài-toán"><span class="toc-section-number">4.1</span>  Bài toán</a></li>
+  <li><a href="#các-phép-thao-tác-với-số-liệu" id="toc-các-phép-thao-tác-với-số-liệu" class="nav-link" data-scroll-target="#các-phép-thao-tác-với-số-liệu"><span class="toc-section-number">4.2</span>  Các phép thao tác với số liệu</a></li>
+  <li><a href="#tư-duy-thao-tác-số-liệu" id="toc-tư-duy-thao-tác-số-liệu" class="nav-link" data-scroll-target="#tư-duy-thao-tác-số-liệu"><span class="toc-section-number">4.3</span>  Tư duy thao tác số liệu</a>
+  <ul class="collapse">
+  <li><a href="#bước-1-reshaping" id="toc-bước-1-reshaping" class="nav-link" data-scroll-target="#bước-1-reshaping"><span class="toc-section-number">4.3.1</span>  Bước 1: Reshaping</a></li>
+  <li><a href="#bước-2-grouping-và-aggregation" id="toc-bước-2-grouping-và-aggregation" class="nav-link" data-scroll-target="#bước-2-grouping-và-aggregation"><span class="toc-section-number">4.3.2</span>  Bước 2: Grouping và Aggregation</a></li>
+  <li><a href="#bước-3-transformation" id="toc-bước-3-transformation" class="nav-link" data-scroll-target="#bước-3-transformation"><span class="toc-section-number">4.3.3</span>  Bước 3: Transformation</a></li>
+  </ul></li>
+  <li><a href="#module-hóa-công-việc" id="toc-module-hóa-công-việc" class="nav-link" data-scroll-target="#module-hóa-công-việc"><span class="toc-section-number">4.4</span>  Module hóa công việc</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tư duy thao tác dữ liệu trong R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">message =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="bài-toán" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="bài-toán"><span class="header-section-number">4.1</span> Bài toán</h2>
+<p>Hôm nay mình sẽ giới thiệu với các bạn một bài toán phân tích số liệu đơn giản trong R. Bài toán này nhằm giúp các bạn hiểu rõ hơn cách thức tư duy khi giải quyết một bài toán bằng lập trình.</p>
+<p>Chúng ta có một bộ số liệu với 4 biến là <code>stt</code> (số thứ tự), <code>gioi</code> (giới: Nam, Nữ), <code>do_tuoi</code> (độ tuổi: &lt;18, 18-45, &gt;45), <code>hailong</code> (điểm hài lòng, từ 0 đến 100), và <code>qol</code> (điểm chất lượng cuộc sống, từ 0 đến 100). Đây là một bộ số liệu do mình tạo ra ngẫu nhiên ra thôi.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">stt =</span> <span class="fu">seq</span>(n),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">gioi =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), n, <span class="cn">TRUE</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Nam"</span>, <span class="st">"Nu"</span>)),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">do_tuoi =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), n, <span class="cn">TRUE</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt;18"</span>, <span class="st">"18-45"</span>, <span class="st">"&gt;45"</span>)),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">hailong =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">100</span>), <span class="dv">1</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">qol =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">100</span>), <span class="dv">1</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">stt</th>
+<th style="text-align: left;">gioi</th>
+<th style="text-align: left;">do_tuoi</th>
+<th style="text-align: right;">hailong</th>
+<th style="text-align: right;">qol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">76.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: right;">69.7</td>
+<td style="text-align: right;">23.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: right;">35.4</td>
+<td style="text-align: right;">28.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: right;">40.6</td>
+<td style="text-align: right;">31.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: right;">30.8</td>
+<td style="text-align: right;">92.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Việc của chúng ta sẽ là tạo ra một bảng phân tích kết quả trông như sau:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Đặc điểm</th>
+<th>Nhóm</th>
+<th>Hài lòng, mean (SD)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Giới</td>
+<td>Nam</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>Giới</td>
+<td>Nữ</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>Độ tuổi</td>
+<td>&lt;18</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td>Độ tuổi</td>
+<td>18-45</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td>Độ tuổi</td>
+<td>&gt;45</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>Có nhiều cách để làm việc này. Cách mà mình giới thiệu hôm nay khá trực tiếp, mặc dù có thể không phải là cách tối ưu.</p>
+</section>
+<section id="các-phép-thao-tác-với-số-liệu" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="các-phép-thao-tác-với-số-liệu"><span class="header-section-number">4.2</span> Các phép thao tác với số liệu</h2>
+<p>Có 4 phép thao tác (manipulate) số liệu chính:</p>
+<ul>
+<li><em>Tái cấu trúc</em> (reshaping): chuyển số liệu từ dạng bảng dài sang dạng bảng ngang và ngược lại (pivot giữa long / wide data), xếp chồng các số liệu lên nhau (stacking / unstacking), v.v.. Thư viện sử dụng cho reshaping là <code>tidyr</code>.</li>
+<li><em>Nhóm</em> (grouping): các số liệu thuộc cùng một nhóm được xếp chung với nhau để phục vụ một mục đích nào đó. Bạn chắc đã làm quen với hàm <code>dplyr::group_by()</code> cho việc này.</li>
+<li><em>Chuyển dạng</em> (transformation): chuyển số liệu cá thể thành các giá trị mới dựa trên một phép biến đổi nào đó như chuẩn hóa (normalization), logarit, chia nhóm (categorization), v.v.. Mọi phép chuyển dạng đều thông qua hàm <code>dplyr::mutate()</code> và các biến thể của nó.</li>
+<li><em>Tổng hợp</em> (aggregation): tính toán các chỉ số tổng hợp (trung bình, tỉ lệ phần trăm, v.v.) từ số liệu cá thể. Hầu hết các phép tổng hợp đều thông qua hàm <code>dplyr::summarize()</code> và các biến thể của nó.</li>
+</ul>
+<p>Bằng những phép thao tác số liệu này, chúng ta có thể tạo ra mọi kết quả mong muốn từ một bộ số liệu gốc.</p>
+</section>
+<section id="tư-duy-thao-tác-số-liệu" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="tư-duy-thao-tác-số-liệu"><span class="header-section-number">4.3</span> Tư duy thao tác số liệu</h2>
+<p>Nhìn vào bộ số liệu gốc, mình nghĩ rằng sẽ cần tạo ra một (hoặc nhiều) bộ số liệu trung gian để phục vụ việc tính toán như trên. Bộ số liệu trung gian sẽ có cấu trúc như thế nào? Quan sát bảng phân tích kết quả, chúng ta thấy rằng:</p>
+<ul>
+<li>Cột “Đặc điểm” là tên các biến mà chúng ta có trong bộ số liệu gốc.</li>
+<li>Cột “Nhóm” là các giá trị của các biến “Đặc điểm” có trong bộ số liệu gốc.</li>
+<li>Cột “Hài lòng” là kết quả tổng hợp của điểm hài lòng trong bộ số liệu gốc.</li>
+</ul>
+<p>Vậy bộ số liệu trung gian của mình có thể là kết quả chuyển từ dạng ngang (các biến xếp thành từng cột) sang dạng dài (các biến xếp chồng lên nhau) của hai biến <code>gioi</code> và <code>do_tuoi</code>, còn giữ lại biến <code>hailong</code>. Ví dụ:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>stt</th>
+<th>variable</th>
+<th>value</th>
+<th>hailong</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>gioi</td>
+<td>Nu</td>
+<td>33.0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>do_tuoi</td>
+<td>&gt;45</td>
+<td>33.0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>gioi</td>
+<td>Nam</td>
+<td>69.7</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>do_tuoi</td>
+<td>&gt;45</td>
+<td>69.7</td>
+</tr>
+</tbody>
+</table>
+<p>Sau đó mình chỉ việc tạo ra các nhóm của Đặc điểm (<code>variable</code>) và Nhóm (<code>value</code>) để tổng hợp (aggregate) cột <code>hailong</code>. Hãy cùng xem chúng ta thực thi kế hoạch này.</p>
+<section id="bước-1-reshaping" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="bước-1-reshaping"><span class="header-section-number">4.3.1</span> Bước 1: Reshaping</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d_long <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(gioi, do_tuoi, hailong) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(gioi, do_tuoi), <span class="at">names_to =</span> <span class="st">"variable"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>d_long <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">hailong</th>
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">33.0</td>
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">33.0</td>
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">69.7</td>
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">69.7</td>
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">35.4</td>
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">35.4</td>
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="bước-2-grouping-và-aggregation" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="bước-2-grouping-và-aggregation"><span class="header-section-number">4.3.2</span> Bước 2: Grouping và Aggregation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d_agg <span class="ot">&lt;-</span> d_long <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(variable, value) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean =</span> <span class="fu">mean</span>(hailong),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd =</span> <span class="fu">sd</span>(hailong)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>d_agg <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: right;">49.97685</td>
+<td style="text-align: right;">28.50213</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: right;">50.87988</td>
+<td style="text-align: right;">29.54522</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: right;">49.84675</td>
+<td style="text-align: right;">28.96249</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: right;">49.64345</td>
+<td style="text-align: right;">29.21245</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: right;">50.84234</td>
+<td style="text-align: right;">28.77515</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="bước-3-transformation" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="bước-3-transformation"><span class="header-section-number">4.3.3</span> Bước 3: Transformation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d_agg <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_sd =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f (%.1f)"</span>, mean, sd)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(variable, value, mean_sd) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: left;">mean_sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">50.0 (28.5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">50.9 (29.5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">49.8 (29.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">49.6 (29.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">50.8 (28.8)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="module-hóa-công-việc" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="module-hóa-công-việc"><span class="header-section-number">4.4</span> Module hóa công việc</h2>
+<p>Như ở trên, bạn đã thấy chúng ta thống kê được mean (SD) của điểm hài lòng. Nhưng nếu chúng ta muốn làm tương tự như vậy với điểm chất lượng cuộc sống và gộp chung kết quả với điểm hài lòng thì bạn sẽ làm thế nào? Tất nhiên, bạn hoàn toàn có thể thêm tạo ra các biến <code>mean_qol</code> và <code>sd_qol</code> cho điểm chất lượng cuộc sống trong Bước 2, nhưng nếu không phải là 2 biến mà là 20 biến, thì việc đó sẽ rất phiền toái, hoặc nếu bạn phải thay đổi kế hoạch phân tích, loại bỏ biến <code>qol</code> và thêm biến khác vào. Đây là lúc bạn cần dùng đến <strong>hàm</strong>, và chúng ta gọi đây là module hóa công việc.</p>
+<p>Ba bước ở trên có thể được tóm gọn trong một hàm như sau.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>get_mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(d, group_vars, outcome_var) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    d <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(group_vars, outcome_var))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">all_of</span>(group_vars), <span class="at">names_to =</span> <span class="st">"variable"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 2</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(variable, value) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(<span class="sc">!!</span><span class="fu">sym</span>(outcome_var)),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(<span class="sc">!!</span><span class="fu">sym</span>(outcome_var))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 3</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">outcome =</span> outcome_var,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_sd =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f (%.1f)"</span>, mean, sd)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(variable, value, outcome, mean_sd)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>group_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"gioi"</span>, <span class="st">"do_tuoi"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>outcome_var <span class="ot">&lt;-</span> <span class="st">"hailong"</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">get_mean_sd</span>(d, group_vars, outcome_var) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: left;">outcome</th>
+<th style="text-align: left;">mean_sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.0 (28.5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.9 (29.5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">49.8 (29.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">49.6 (29.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.8 (28.8)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Và chúng ta có thể tự động hóa việc tính toán này cho nhiều biến kết cục khác nhau.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>outcome_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"hailong"</span>, <span class="st">"qol"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">map_df</span>(outcome_vars, <span class="sc">~</span> <span class="fu">get_mean_sd</span>(d, group_vars, .x)) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: left;">outcome</th>
+<th style="text-align: left;">mean_sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.0 (28.5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.9 (29.5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">49.8 (29.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">49.6 (29.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">hailong</td>
+<td style="text-align: left;">50.8 (28.8)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">qol</td>
+<td style="text-align: left;">49.3 (30.0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">qol</td>
+<td style="text-align: left;">48.7 (30.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">qol</td>
+<td style="text-align: left;">49.3 (30.7)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">qol</td>
+<td style="text-align: left;">49.9 (29.7)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">qol</td>
+<td style="text-align: left;">48.4 (31.0)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Tất nhiên, nếu bạn muốn chuyển sang dạng nhiều cột kết quả của các biến kết cục thì cũng rất đơn giản, nó chỉ là pivot từ dạng long sang wide thôi.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_df</span>(outcome_vars, <span class="sc">~</span> <span class="fu">get_mean_sd</span>(d, group_vars, .x)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(variable, value),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_from =</span> outcome, <span class="at">values_from =</span> mean_sd) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: left;">hailong</th>
+<th style="text-align: left;">qol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">50.0 (28.5)</td>
+<td style="text-align: left;">49.3 (30.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">50.9 (29.5)</td>
+<td style="text-align: left;">48.7 (30.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">49.8 (29.0)</td>
+<td style="text-align: left;">49.3 (30.7)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">49.6 (29.2)</td>
+<td style="text-align: left;">49.9 (29.7)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">50.8 (28.8)</td>
+<td style="text-align: left;">48.4 (31.0)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Và bạn có thể gói tiếp chức năng này trong một hàm như sau:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>get_mean_sd_all <span class="ot">&lt;-</span> <span class="cf">function</span>(d, group_vars, outcome_vars) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_df</span>(outcome_vars, <span class="sc">~</span> <span class="fu">get_mean_sd</span>(d, group_vars, .x)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(variable, value),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">names_from =</span> outcome, <span class="at">values_from =</span> mean_sd)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">get_mean_sd_all</span>(d, group_vars, outcome_vars) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">variable</th>
+<th style="text-align: left;">value</th>
+<th style="text-align: left;">hailong</th>
+<th style="text-align: left;">qol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&lt;18</td>
+<td style="text-align: left;">50.0 (28.5)</td>
+<td style="text-align: left;">49.3 (30.0)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">18-45</td>
+<td style="text-align: left;">50.9 (29.5)</td>
+<td style="text-align: left;">48.7 (30.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">do_tuoi</td>
+<td style="text-align: left;">&gt;45</td>
+<td style="text-align: left;">49.8 (29.0)</td>
+<td style="text-align: left;">49.3 (30.7)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nam</td>
+<td style="text-align: left;">49.6 (29.2)</td>
+<td style="text-align: left;">49.9 (29.7)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gioi</td>
+<td style="text-align: left;">Nu</td>
+<td style="text-align: left;">50.8 (28.8)</td>
+<td style="text-align: left;">48.4 (31.0)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Những tính năng thuộc về lập trình cho <code>dplyr</code> và <code>purrr</code> như dấu chấm than kép (<code>!!</code>), hàm <code>rlang::sym()</code>, hàm <code>dplyr::all_of()</code>, và hàm <code>purrr:map_df()</code> mình sẽ giới thiệu cụ thể trong một bài khác. Chúng ta sẽ dừng lại bài này ở đây, vì hi vọng bạn đã hiểu rõ hơn cách chúng ta tư duy khi lập trình để thao tác với số liệu. Mình tổng hợp lại kết quả ở dưới đây nhé.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tính mean (SD) cho một biến</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>get_mean_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(d, group_vars, outcome_var) {</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    d <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 1</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(group_vars, outcome_var))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">all_of</span>(group_vars), <span class="at">names_to =</span> <span class="st">"variable"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 2</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(variable, value) <span class="sc">%&gt;%</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(<span class="sc">!!</span><span class="fu">sym</span>(outcome_var)),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(<span class="sc">!!</span><span class="fu">sym</span>(outcome_var))</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Bước 3</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">outcome =</span> outcome_var,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_sd =</span> <span class="fu">sprintf</span>(<span class="st">"%.1f (%.1f)"</span>, mean, sd)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(variable, value, outcome, mean_sd)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Tính mean (SD) cho tất cả các biến</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>get_mean_sd_all <span class="ot">&lt;-</span> <span class="cf">function</span>(d, group_vars, outcome_vars) {</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_df</span>(outcome_vars, <span class="sc">~</span> <span class="fu">get_mean_sd</span>(d, group_vars, .x)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(variable, value),</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">names_from =</span> outcome, <span class="at">values_from =</span> mean_sd)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>group_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"gioi"</span>, <span class="st">"do_tuoi"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>outcome_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"hailong"</span>, <span class="st">"qol"</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">get_mean_sd_all</span>(d, group_vars, outcome_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_categorization.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tạo nhóm từ biến liên tục</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05_func_ggplot.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Sử dụng hàm trong R để tối ưu hóa công việc</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

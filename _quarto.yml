@@ -1,0 +1,24 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "R Tutorial"
+  author: "Hoang Bao Long, MD MPH"
+  downloads: pdf
+  chapters:
+    - index.qmd
+    - 01_dataframe_tibble.qmd
+    - 02_purrr_map.qmd
+    - 03_categorization.qmd
+    - 04_data_manipulation.qmd
+    - 05_func_ggplot.qmd
+
+format:
+  html:
+    theme: cosmo
+    code-copy: true
+    mainfont: Arial
+    fontsize: 11pt
+  pdf:
+    documentclass: scrreprt

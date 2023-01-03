@@ -1,0 +1,131 @@
+# So sánh data frame và tibble
+
+```{r}
+#| message: false
+
+library(dplyr)
+library(knitr)
+
+opts_chunk$set(
+    message = FALSE
+)
+
+d <- data.frame(
+    a = c(1, 0, 1, 0, 0),
+    b = seq(5)
+)
+
+d
+```
+
+## Tên hàng
+
+Trong khi data frame có tên hàng, tibble không có.
+
+```{r}
+rownames(d) <- c("a", "b", "c", "d", "e")
+d
+```
+
+```{r}
+d_tib <- tibble(d)
+d_tib
+```
+
+Muốn thêm tên hàng cho tibble, chúng ta tạo một cột mới.
+
+```{r}
+d_tib <- tibble(tibble::rownames_to_column(d, "id"))
+d_tib
+```
+
+Cũng vì lí do này, data frame có thể slice theo tên hàng, còn tibble thì không.
+
+```{r}
+d[c("a", "b"), ]
+```
+
+```{r}
+d_tib %>% filter(id %in% c("a", "b"))
+```
+
+## Slice cột
+
+Để truy cập vào dữ liệu của một cột trong data frame, chúng ta có những cách sau.
+
+```{r}
+d$a
+```
+
+```{r}
+d[, "a"]
+```
+
+```{r}
+d[, c("a")]
+```
+
+Những cách này trả về vector nếu chỉ slice một cột. Muốn giữ nguyên định dạng data frame (gọi là subset), chúng ta làm như sau.
+
+```{r}
+d["a"]
+```
+
+Thêm một cặp ngoặc vuông nữa, bạn cũng sẽ lấy được vector giá trị của cột.
+
+```{r}
+d[["a"]]
+```
+
+Slicing bằng giá trị chuỗi kí tự của tên cột thuận lợi cho lập trình.
+
+```{r}
+col_name <- "a"
+d[[col_name]]
+```
+
+Đối với tibble, slicing luôn trả về subset.
+
+```{r}
+d_tib["a"]
+```
+
+```{r}
+d_tib[, "a"]
+```
+
+```{r}
+d_tib[, c("a")]
+```
+
+Để lấy vector, bạn có thể dùng các cách sau.
+
+```{r}
+d_tib$a
+```
+
+```{r}
+d_tib[["a"]]
+```
+
+```{r}
+d_tib %>% pull(a)
+```
+
+Do vậy, muốn lập trình với tibble, bạn có thể làm như sau.
+
+```{r}
+d_tib[[col_name]]
+```
+
+Hoặc
+
+```{r}
+d_tib %>% pull(!!rlang::sym(col_name))
+```
+
+Tương tự, nếu muốn subset, bạn có thể làm như trên với hàm `select()`.
+
+```{r}
+d_tib %>% select(!!rlang::sym(col_name))
+```
