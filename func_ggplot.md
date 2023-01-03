@@ -65,7 +65,7 @@ ggplot(d, aes(x = hb)) +
     geom_histogram()
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-3-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-3-1.png)
 
 
 Có một số tùy biến mà chúng ta thường sẽ muốn thiết lập để biểu đồ nhìn có thẩm mỹ hơn. Chẳng hạn, mình muốn chuyển sang theme đen-trắng, loại bỏ các đường dóng, đổi tên trục biểu đồ, và thêm ghi chú.
@@ -84,7 +84,7 @@ ggplot(d, aes(x = hb)) +
     )
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-4-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-4-1.png)
 
 
 Mình chợt nhận ra là mình muốn thêm đường thẳng thể hiện trung bình của nồng độ hemoglobin vào biểu đồ này, và thay đổi màu sắc của histogram.
@@ -117,7 +117,7 @@ ggplot(d, aes(x = hb)) +
     )
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-5-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-5-1.png)
 
 
 Bây giờ chúng ta sẽ vẽ tương tự cho biến `rbc`. Bạn nhận ra rằng mình sẽ sao chép lại một đoạn mã lệnh rất dài. Và giả sử mình muốn sử dụng những màu sắc khác cho histogram và đường trung bình, mình sẽ phải chỉnh sửa lại các dòng lệnh liên quan.
@@ -150,7 +150,7 @@ ggplot(d, aes(x = rbc)) +
     )
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-6-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-6-1.png)
 
 
 
@@ -236,7 +236,7 @@ plot_create(d) %>%
     plot_histogram(var_name, var_label, bar_fill)
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-8-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-8-1.png)
 
 
 Nhưng với biểu đồ cho hồng cầu, mình sẽ vẽ đường thẳng trung bình, và giữ nguyên thiết lập màu sắc của biểu đồ trước.
@@ -252,7 +252,7 @@ plot_create(d) %>%
     plot_mean(d, var_name, line_color)
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-9-1.png){width=576}
+![](func_ggplot_files/figure-html/unnamed-chunk-9-1.png)
 
 
 
@@ -279,7 +279,7 @@ plot_create(d) %>%
     plot_subgroup(var_subgroup)
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-10-1.png){width=960}
+![](func_ggplot_files/figure-html/unnamed-chunk-10-1.png)
 
 
 ## Vẽ nhiều biểu đồ cho nhiều biến
@@ -334,7 +334,7 @@ prepare_long_data(d, vars_to_long, vars_labels) %>%
     plot_subgroup(var_subgroup)
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-12-1.png){width=960}
+![](func_ggplot_files/figure-html/unnamed-chunk-12-1.png)
 
 
 ## Vẽ nhiều biểu đồ cho nhiều biến dưới nhóm
@@ -384,7 +384,7 @@ prepare_data_multisubgroups(d, vars_subgroup, var_subgroup) %>%
     plot_subgroup(var_subgroup)
 ```
 
-![](func_ggplot_files/figure-html/unnamed-chunk-14-1.png){width=960}
+![](func_ggplot_files/figure-html/unnamed-chunk-14-1.png)
 
 
 Hi vọng với những ví dụ trên đây, các bạn có thể mường tượng được vai trò của hàm trong việc chia một nhiệm vụ lớn thành nhiều công việc nhỏ. Hàm không chỉ giúp chúng ta viết các đoạn lệnh  gọn gàng hơn và tránh lặp lại các lệnh nhiều lần, nó còn giúp chúng ta tùy biến trong lập trình thông qua việc ghép các công việc khác nhau lại với nhau.
