@@ -1,0 +1,213 @@
+# Hàm `names()`
+
+## Vector có tên
+
+Trong ví dụ dưới đây chúng ta có tên các biến và nhãn của chúng.
+
+```{r}
+vars <- c("age", "sex", "bmi")
+varnames <- c("Tuổi", "Giới", "BMI")
+
+print(vars)
+print(varnames)
+```
+
+Làm thế nào để chúng ta lấy được nhãn của biến `age`? Bạn sẽ cần sử dụng hàm `which()`. Trước hết hãy xem hàm `which()` làm gì.
+
+```{r}
+which(vars == "age")
+```
+
+Như bạn đã thấy, hàm `which()` trả về danh sách các vị trí trong vector thỏa mãn điều kiện được khai báo trong hàm. Vậy để lấy nhãn của biến `age`, chúng ta sẽ làm như sau.
+
+```{r}
+varnames[which(vars == "age")]
+```
+
+R cung cấp một cách tham chiếu khác tới vector bằng tên gọi. Hãy "đặt tên" cho vector `varnames` và xem sự khác biệt.
+
+```{r}
+names(varnames) <- vars
+print(varnames)
+```
+
+Chúng ta có một vector trong đó mỗi phần tử có một tên gọi riêng. Bây giờ chúng ta có thể tham chiếu tới từng phần tử bằng tên gọi tương tự như dictionary trong Python. Tuy nhiên, khác với Python, tất cả các tên trong R sẽ được tự động chuyển về kiểu kí tự.
+
+```{r}
+varnames["age"]
+```
+
+Nếu muốn xóa tên, chúng ta sẽ gán cho nó giá trị `NULL`.
+
+```{r}
+names(varnames) <- NULL
+varnames
+```
+
+### Khai báo tên trực tiếp khi khai báo vector
+
+Bạn cũng có thể khai báo tên ngay khi tạo vector. Nếu trong tên có kí tự đặc biệt không phải chữ cái, số, và dấu gạch nối (`_`), bạn có thể bao chúng trong cặp dấu ngoặc kép (`""`) hoặc phẩy trên trái (`\`\``).
+
+```{r}
+c(
+    hb_d0 = "Hemoglobin (baseline)",
+    "rbc d1" = "Red blood cell (day 1)",
+    `plt d2` = "Platelet (day 2)"
+)
+```
+
+### Tạo tên gọi theo quy luật
+
+Bạn không cần phải gõ tên cho từng phần tử nếu các phần tử có tên tuân theo một quy luật. Chẳng hạn, chúng ta có một danh sách các mốc thời gian, và tên gọi của mốc thời gian "X" là "Ngày X".
+
+```{r}
+timepoints <- seq_len(7)
+names(timepoints) <- paste0("Ngày ", timepoints)
+timepoints
+```
+
+### Subset danh sách
+
+Quay trở lại với ví dụ đầu tiên, làm sao để lấy được danh sách nhãn của một số biến?
+
+```{r}
+vars_subset <- c("age", "bmi")
+varnames[vars %in% vars_subset]
+```
+
+Với tên gọi, bạn có thể dùng hàm lặp thay vì dùng toán tử matching `%in%`.
+
+```{r}
+names(varnames) <- vars
+sapply(vars_subset, function(x) varnames[x], USE.NAMES = FALSE)
+```
+
+
+## List có tên
+
+Bạn cũng có thể đặt cho danh sách. Thông thường chúng ta đặt tên cho danh sách trong lúc khai báo danh sách.
+
+```{r}
+list(
+    id = c(1, 2, 3),
+    initials = c("PKL", "LHS", "MTNN")
+)
+```
+
+Nếu danh sách không có tên (ví dụ, được tạo ra từ hàm lặp), bạn có thể dùng hàm `names()` để đặt tên.
+
+```{r}
+no_reps <- c(1, 4, 2)
+results <- lapply(no_reps, function(x) rep(1, x))
+print(results)
+
+names(results) <- no_reps
+print(results)
+```
+
+Hoặc chúng ta đặt tên cho vector `no_reps` trước. Danh sách trả về sẽ sử dụng tên của vector này.
+
+```{r}
+names(no_reps) <- c("1 element", "4 elements", "2 elements")
+lapply(no_reps, function(x) rep(1, x))
+```
+
+Hãy xem một ví dụ "nâng cao" để thấy giá trị của việc đặt tên. Trong ví dụ này, chúng ta sẽ viết một hàm để thống kê theo nhiều cách khác nhau, cách thức thống kê sẽ được quy định đối số `method` của hàm.
+
+```{r}
+get_stats <- function(data, method = "mean") {
+    switch(method,
+        "mean" = sprintf("%.2f (%.2f)", mean(data, na.rm = TRUE), sd(data, na.rm = TRUE)),
+        "median" = sprintf("%.2f [%.2f, %.2f]", median(data, na.rm = TRUE), quantile(data, .25, na.rm = TRUE), quantile(data, .75, na.rm = TRUE)),
+        "minmax" = sprintf("%.2f-%.2f", min(data, na.rm = TRUE), max(data, na.rm = TRUE)),
+    )
+}
+
+set.seed(0)
+data <- rgamma(100, 2, 1)
+
+get_stats(data)
+get_stats(data, "median")
+get_stats(data, "minmax")
+```
+
+Thay vì việc gọi hàm `get_stats()` 3 lần, chúng ta có thể sử dụng vòng lặp để cung cấp thông tin tự động cho đối số `method`.
+
+```{r}
+methods <- c("mean", "minmax", "median")
+sapply(methods, function(x) get_stats(data, x))
+```
+
+Hàm này còn có thể mạnh hơn nữa khi lặp lại trên nhiều biến.
+
+```{r}
+data2 <- data.frame(
+    d0 = rgamma(100, 2, 1),
+    d1 = rgamma(100, 3, 1.2),
+    d2 = rgamma(100, 3.5, 2)
+)
+
+print(head(data2))
+
+vars_to_get_stats <- c("d0", "d1", "d2")
+sapply(vars_to_get_stats,
+    function(x) sapply(methods, function(y) get_stats(data2[[x]], y))
+) |> t() |> as.data.frame()   # Đổi hàng và cột cho nhau
+```
+
+Bạn có thể đi xa thêm một bước bằng cách đặt tên cho các vector `methods` và `vars_to_get_stats`. Chúng ta sẽ có một bảng tổng kết với tên gọi hoàn chỉnh sẵn sàng cho việc xuất bản.
+
+```{r}
+names(methods) <- c("Mean (SD)", "Min-Max", "Median [Q1, Q3]")
+names(vars_to_get_stats) <- c("Trước mổ", "Sau mổ - ngày 1", "Sau mổ - ngày 2")
+sapply(vars_to_get_stats,
+    function(x) sapply(methods, function(y) get_stats(data2[[x]], y))
+) |> t() |> knitr::kable()
+```
+
+
+## Giải nén tên gọi như đối số trong hàm
+
+Nếu đã làm việc với thư viện `dplyr`, chắc hẳn bạn đã từng biết cú pháp của hàm `rename()`: `rename(<tên_mới> = <tên_cũ>)`. Cá nhân mình thấy đây là một cú pháp ngớ ngẩn (logic thông thường là `<tên_cũ> = <tên_mới>`), nhưng dù là cú pháp nào thì bạn sẽ phải gõ bằng tay. Để tự động hóa việc này, chúng ta có thể sử dụng toán tử "ba chấm than" (`!!!`) để "giải nén" một vector có tên, tương tự như kĩ thuật dictionary unpacking (`**kwargs`) trong Python.
+
+```{r}
+library(dplyr)
+data2 %>% rename(!!!vars_to_get_stats) %>% head()
+```
+
+Tương tự, bạn có thể thiết kế data dictionary để recode cho biến (sử dụng hàm `dplyr::recode()`).
+
+```{r}
+datadict <- data.frame(
+    var = c("sex", "sex", "has_insurance", "has_insurance"),
+    code = c(1, 2, 0, 1),
+    value = c("Female", "Male", "No", "Yes")
+)
+
+datadict
+```
+
+```{r}
+d <- data.frame(
+    sex = sample(c(1, 2), 10, replace = TRUE),
+    has_insurance = sample(c(0, 1), 10, replace = TRUE)
+) %>% tibble::as.tibble()
+
+d
+```
+
+```{r}
+recode_var <- function(d, datadict, varname) {
+    # Lập từ điển recode cho biến
+    codes <- datadict %>% filter(var == varname) %>% pull(code)
+    values <- datadict %>% filter(var == varname) %>% pull(value)
+    names(values) <- codes
+
+    # Recode cho biến
+    # Lưu ý: cú pháp của recode() ngược với rename()
+    # recode(<giá_trị_cũ> = <giá_trị_mới>)
+    d %>% mutate(!!varname := recode_factor(!!sym(varname), !!!values))
+}
+
+recode_var(d, datadict, "sex")
+```
