@@ -549,13 +549,9 @@ Attaching package: 'dplyr'</code></pre>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_insurance =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">as.tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `as.tibble()` was deprecated in tibble 2.0.0.
-ℹ Please use `as_tibble()` instead.
-ℹ The signature and semantics have changed, see `?as_tibble`.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
      sex has_insurance
@@ -573,19 +569,19 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>recode_var <span class="ot">&lt;-</span> <span class="cf">function</span>(d, datadict, varname) {</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lập từ điển recode cho biến</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    codes <span class="ot">&lt;-</span> datadict <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">==</span> varname) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(code)</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    values <span class="ot">&lt;-</span> datadict <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">==</span> varname) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value)</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(values) <span class="ot">&lt;-</span> codes</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode cho biến</span></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lưu ý: cú pháp của recode() ngược với rename()</span></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode(&lt;giá_trị_cũ&gt; = &lt;giá_trị_mới&gt;)</span></span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">varname :=</span> <span class="fu">recode_factor</span>(<span class="sc">!!</span><span class="fu">sym</span>(varname), <span class="sc">!!!</span>values))</span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="fu">recode_var</span>(d, datadict, <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>recode_var <span class="ot">&lt;-</span> <span class="cf">function</span>(d, datadict, varname) {</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lập từ điển recode cho biến</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    codes <span class="ot">&lt;-</span> datadict <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">==</span> varname) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(code)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    values <span class="ot">&lt;-</span> datadict <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">==</span> varname) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(value)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(values) <span class="ot">&lt;-</span> codes</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode cho biến</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lưu ý: cú pháp của recode() ngược với rename()</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># recode(&lt;giá_trị_cũ&gt; = &lt;giá_trị_mới&gt;)</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">varname :=</span> <span class="fu">recode_factor</span>(<span class="sc">!!</span><span class="fu">sym</span>(varname), <span class="sc">!!!</span>values))</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="fu">recode_var</span>(d, datadict, <span class="st">"sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    sex    has_insurance
