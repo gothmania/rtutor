@@ -323,10 +323,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[1] "Tuổi" "BMI" </code></pre>
 </div>
 </div>
-<p>Với tên gọi, bạn có thể dùng hàm lặp thay vì dùng toán tử matching <code>%in%</code>.</p>
+<p>Với tên gọi, bạn có thể gọi thẳng trực tiếp thay vì dùng toán tử matching <code>%in%</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(varnames) <span class="ot">&lt;-</span> vars</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(vars_subset, <span class="cf">function</span>(x) varnames[x], <span class="at">USE.NAMES =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>varnames[vars_subset]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   age    bmi 
 "Tuổi"  "BMI" </code></pre>

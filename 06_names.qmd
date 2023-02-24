@@ -75,11 +75,11 @@ vars_subset <- c("age", "bmi")
 varnames[vars %in% vars_subset]
 ```
 
-Với tên gọi, bạn có thể dùng hàm lặp thay vì dùng toán tử matching `%in%`.
+Với tên gọi, bạn có thể gọi thẳng trực tiếp thay vì dùng toán tử matching `%in%`.
 
 ```{r}
 names(varnames) <- vars
-sapply(vars_subset, function(x) varnames[x], USE.NAMES = FALSE)
+varnames[vars_subset]
 ```
 
 
